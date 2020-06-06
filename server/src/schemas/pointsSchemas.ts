@@ -24,6 +24,6 @@ export const getPoints = {
   query: Joi.object({
     city: Joi.string().min(1),
     uf: Joi.string().min(1).max(2),
-    items: Joi.string().min(1),
+    items: Joi.string(),
   }),
 };
