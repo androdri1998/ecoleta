@@ -4,6 +4,9 @@ import { Link, useHistory } from "react-router-dom";
 import { Map, TileLayer, Marker } from "react-leaflet";
 import { LeafletMouseEvent } from "leaflet";
 import axios from "axios";
+
+import MyDropzone from "../../components/Dropzone";
+
 import { IItem, IUf, ICity, ICityResponse } from "./types";
 import api from "../../services/api";
 
@@ -35,6 +38,7 @@ const CreatePoint: React.FC = () => {
     0,
   ]);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [selectedFile, setSelectedFile] = useState<File>();
 
   useEffect(() => {
     const loadItems = async () => {
@@ -116,19 +120,21 @@ const CreatePoint: React.FC = () => {
     const city = selectedCity;
     const [latitude, longitude] = selectedPosition;
     const items = selectedItems;
+    const image = selectedFile;
 
-    const data = {
-      image:
-        "https://images.unsplash.com/photo-1556767576-5ec41e3239ea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-      name,
-      email,
-      whatsapp,
-      uf,
-      city,
-      latitude,
-      longitude,
-      items,
-    };
+    const data = new FormData();
+
+    if (image) {
+      data.append("image", image);
+    }
+    data.append("name", name);
+    data.append("email", email);
+    data.append("whatsapp", whatsapp);
+    data.append("uf", uf);
+    data.append("city", city);
+    data.append("latitude", String(latitude));
+    data.append("longitude", String(longitude));
+    data.append("items", items.join(","));
 
     await api.post("/points", data);
 
@@ -152,6 +158,9 @@ const CreatePoint: React.FC = () => {
           collection point
           {/* Cadastro do ponto de coleta */}
         </h1>
+
+        <MyDropzone onFileUploaded={setSelectedFile} />
+
         <fieldset>
           <legend>
             <h2>Entity data</h2>

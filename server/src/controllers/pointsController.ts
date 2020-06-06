@@ -3,13 +3,13 @@ import { Request, Response } from "express";
 import { IPointsController } from "./types/pointsController";
 import { CustomNotFoundError } from "../utils/Errors";
 import knex from "../database/connection";
+import config from "../utils/config";
 
 class PointsController implements IPointsController {
   async create(req: Request, res: Response) {
     const trx = await knex.transaction();
     try {
       const {
-        image,
         name,
         email,
         whatsapp,
@@ -19,10 +19,12 @@ class PointsController implements IPointsController {
         uf,
         items,
       } = req.body;
+      const { filename } = req.file;
+
       const datetimeNow = moment().utc().format("YYYY-MM-DD HH:mm:ss");
 
       const point = {
-        image,
+        image: `${filename}`,
         name,
         email,
         whatsapp,
@@ -37,15 +39,18 @@ class PointsController implements IPointsController {
       const insertedsPointsIds: number[] = await trx("points").insert(point);
 
       const point_id = insertedsPointsIds[0];
-      const pointItems = items.map((item_id: number) => {
-        return {
-          item_id,
-          point_id: point_id,
-          deleted: false,
-          created_at: datetimeNow,
-          updated_at: datetimeNow,
-        };
-      });
+      const pointItems = items
+        .split(",")
+        .map((item_id: string) => Number(item_id.trim()))
+        .map((item_id: number) => {
+          return {
+            item_id: item_id,
+            point_id: point_id,
+            deleted: false,
+            created_at: datetimeNow,
+            updated_at: datetimeNow,
+          };
+        });
 
       await trx("point_items").insert(pointItems);
 
@@ -68,7 +73,7 @@ class PointsController implements IPointsController {
         .first();
 
       if (!point) {
-        throw new CustomNotFoundError("User not found");
+        throw new CustomNotFoundError("Point not found");
       }
 
       const items = await knex("items")
@@ -77,7 +82,12 @@ class PointsController implements IPointsController {
         .andWhere("items.deleted", false)
         .select("items.title");
 
-      return res.json({ point, items });
+      const serializedPoints = {
+        ...point,
+        image_url: `${config.base_api_url}/uploads/${point.image}`,
+      };
+
+      return res.json({ point: serializedPoints, items });
     } catch (err) {
       throw err;
     }
@@ -117,7 +127,12 @@ class PointsController implements IPointsController {
           .select("points.*");
       }
 
-      return res.json({ results: points });
+      const serializedPoints = points.map((point) => ({
+        ...point,
+        image_url: `${config.base_api_url}/uploads/${point.image}`,
+      }));
+
+      return res.json({ results: serializedPoints });
     } catch (err) {
       throw err;
     }

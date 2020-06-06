@@ -14,7 +14,7 @@ class ItemsController implements IItemsController {
     const serializedItems = items.map((item) => {
       return {
         id: item.id,
-        image_url: `${config.base_api_url}/uploads/${item.image}`,
+        image_url: `${config.base_api_url}/svgs/${item.image}`,
         title: item.title,
       };
     });

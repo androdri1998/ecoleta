@@ -5,42 +5,42 @@ export async function seed(knex: Knex) {
   const dateTimeNow = moment().utc().format("YYYY-MM-DD HH:mm:ss");
   await knex("items").insert([
     {
-      title: "Lâmpadas",
+      title: "Lamps",
       image: "lampadas.svg",
       deleted: false,
       created_at: dateTimeNow,
       updated_at: dateTimeNow,
     },
     {
-      title: "Pilhas e Baterias",
+      title: "Stacks and Batteries",
       image: "baterias.svg",
       deleted: false,
       created_at: dateTimeNow,
       updated_at: dateTimeNow,
     },
     {
-      title: "Papéis e Papelão",
+      title: "Papers and Cardboard",
       image: "papeis-papelao.svg",
       deleted: false,
       created_at: dateTimeNow,
       updated_at: dateTimeNow,
     },
     {
-      title: "Resíduos Eletrônicos",
+      title: "Electronic Waste",
       image: "eletronicos.svg",
       deleted: false,
       created_at: dateTimeNow,
       updated_at: dateTimeNow,
     },
     {
-      title: "Resíduos Orgânicos",
+      title: "Organic Waste",
       image: "organicos.svg",
       deleted: false,
       created_at: dateTimeNow,
       updated_at: dateTimeNow,
     },
     {
-      title: "Óleo de conzinha",
+      title: "Kitchen oil",
       image: "oleo.svg",
       deleted: false,
       created_at: dateTimeNow,

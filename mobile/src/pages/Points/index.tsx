@@ -14,7 +14,7 @@ import { SvgUri } from "react-native-svg";
 import * as Location from "expo-location";
 
 import api from "../../services/api";
-import { IItem, IPoints, IParams, ILoadPoints } from "./types";
+import { IItem, IPoint, IParams, ILoadPoints } from "./types";
 
 import { styles } from "./styles";
 
@@ -22,7 +22,7 @@ const Points: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [items, setItems] = useState<IItem[]>([]);
-  const [points, setPoints] = useState<IPoints[]>([]);
+  const [points, setPoints] = useState<IPoint[]>([]);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [initialPosition, setInitialPosition] = useState<[number, number]>([
     0,
@@ -141,7 +141,7 @@ const Points: React.FC = () => {
                     <Image
                       style={styles.mapMarkerImage}
                       source={{
-                        uri: point.image,
+                        uri: point.image_url,
                       }}
                     />
                     <Text style={styles.mapMarkerTitle}>{point.name}</Text>

@@ -4,9 +4,10 @@ export interface IItem {
   title: string;
 }
 
-export interface IPoints {
+export interface IPoint {
   id: number;
   image: string;
+  image_url: string;
   name: string;
   email: string;
   whatsapp: string;
