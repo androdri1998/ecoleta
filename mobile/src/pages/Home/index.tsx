@@ -4,7 +4,8 @@ import axios from "axios";
 import { View, ImageBackground, Image, Text } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { styles } from "./styles";
+import RNPickerSelect from "react-native-picker-select";
+import { styles, pickerSelectStyles } from "./styles";
 import { IHandleToPoints, IUf, ICityResponse, ICity } from "./types";
 
 const Home: React.FC = () => {
@@ -12,8 +13,8 @@ const Home: React.FC = () => {
   const [citySelected, setCitySelected] = useState<string>("");
   const [ufSelected, setUfSelected] = useState<string>("");
 
-  const [cities, setCities] = useState<ICity[]>();
-  const [ufs, setUfs] = useState<string[]>();
+  const [cities, setCities] = useState<ICity[]>([]);
+  const [ufs, setUfs] = useState<string[]>([]);
 
   useEffect(() => {
     const loadUfs = async () => {
@@ -53,7 +54,9 @@ const Home: React.FC = () => {
   }
 
   const handleNavigationToPoints = ({ city, uf }: IHandleToPoints) => {
-    navigation.navigate("Points", { city, uf });
+    if (city && uf) {
+      navigation.navigate("Points", { city, uf });
+    }
   };
 
   return (
@@ -77,8 +80,44 @@ const Home: React.FC = () => {
         </Text>
       </View>
       <View style={styles.footer}>
+        <RNPickerSelect
+          Icon={() => (
+            <Icon
+              style={{ marginTop: 16, marginRight: 10 }}
+              name="chevron-down"
+              size={20}
+              color="#607d8b"
+            />
+          )}
+          style={pickerSelectStyles}
+          placeholder={{ label: "Select an UF" }}
+          onValueChange={(value) => handleSelectUf(value)}
+          items={ufs.map((uf) => ({ key: uf, label: uf, value: uf }))}
+        />
+        <RNPickerSelect
+          disabled={!ufSelected}
+          Icon={() => (
+            <Icon
+              style={{ marginTop: 16, marginRight: 10 }}
+              name="chevron-down"
+              size={20}
+              color="#607d8b"
+            />
+          )}
+          style={pickerSelectStyles}
+          placeholder={{ label: "Select a city" }}
+          onValueChange={(value) => handleSelectCity(value)}
+          items={cities.map((city) => ({
+            key: city.id,
+            label: city.name,
+            value: city.name,
+          }))}
+        />
         <RectButton
-          style={styles.button}
+          style={[
+            styles.button,
+            !ufSelected || !citySelected ? styles.buttonDisabled : {},
+          ]}
           onPress={() =>
             handleNavigationToPoints({ city: citySelected, uf: ufSelected })
           }
