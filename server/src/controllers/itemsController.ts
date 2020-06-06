@@ -5,6 +5,7 @@ import {
   IItem,
 } from "./types/itemsController";
 import knex from "../database/connection";
+import config from "../utils/config";
 
 class ItemsController implements IItemsController {
   async index(req: Request, res: Response): Promise<Response<IResponseItem[]>> {
@@ -13,7 +14,7 @@ class ItemsController implements IItemsController {
     const serializedItems = items.map((item) => {
       return {
         id: item.id,
-        image_url: `http://10.0.0.8:3333/uploads/${item.image}`,
+        image_url: `${config.base_api_url}/uploads/${item.image}`,
         title: item.title,
       };
     });
