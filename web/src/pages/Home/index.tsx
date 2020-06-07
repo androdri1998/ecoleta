@@ -1,11 +1,14 @@
 import React from "react";
 import { FiLogIn } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 import "./styles.css";
 
 import logo from "../../assets/logo.svg";
 
 const Home: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div id="page-home">
       <div className="content">
@@ -14,16 +17,13 @@ const Home: React.FC = () => {
         </header>
 
         <main>
-          <h1>Your marketplace of the waste collection.</h1>
-          {/* seu marketplace de coleta de resíduos */}
-          <p>We help people find collection points efficiently</p>
-          {/* Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente */}
+          <h1>{t("TITLE_PAGE_HOME")}</h1>
+          <p>{t("DESCRIPTION_PAGE_HOME")}</p>
           <Link to="/create-point">
             <span>
               <FiLogIn />
             </span>
-            <strong>Register a collection point</strong>
-            {/* cadastrar um novo ponto de coleta */}
+            <strong>{t("BUTTON_TEXT_PAGE_HOME")}</strong>
           </Link>
         </main>
       </div>

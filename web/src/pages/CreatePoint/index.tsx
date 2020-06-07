@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Map, TileLayer, Marker } from "react-leaflet";
 import { LeafletMouseEvent } from "leaflet";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 import MyDropzone from "../../components/Dropzone";
 
@@ -15,6 +16,7 @@ import "./styles.css";
 import logo from "../../assets/logo.svg";
 
 const CreatePoint: React.FC = () => {
+  const { t } = useTranslation();
   const history = useHistory();
 
   const [items, setItems] = useState<IItem[]>([]);
@@ -136,10 +138,12 @@ const CreatePoint: React.FC = () => {
     data.append("longitude", String(longitude));
     data.append("items", items.join(","));
 
-    await api.post("/points", data);
-
-    alert("Collection point created");
-    history.push("/");
+    try {
+      await api.post("/points", data);
+      history.push("/success-create-point");
+    } catch (err) {
+      alert(t("CANNOT_CREATE_POINT"));
+    }
   }
 
   return (
@@ -148,27 +152,23 @@ const CreatePoint: React.FC = () => {
         <img src={logo} alt="Ecoleta" />
         <Link to="/">
           <FiArrowLeft />
-          Go back to home
-          {/* voltar para home */}
+          {t("BACK_TO_HOME_PAGE_CREATE_POINT")}
         </Link>
       </header>
       <form onSubmit={handleSubmit}>
         <h1>
-          Registration of the <br />
-          collection point
-          {/* Cadastro do ponto de coleta */}
+          {t("TITLE_PART_1_PAGE_CREATE_POINT")} <br />
+          {t("TITLE_PART_2_PAGE_CREATE_POINT")}
         </h1>
 
         <MyDropzone onFileUploaded={setSelectedFile} />
 
         <fieldset>
           <legend>
-            <h2>Entity data</h2>
-            {/* dados */}
+            <h2>{t("ENTITY_DATA_PAGE_CREATE_POINT")}</h2>
           </legend>
           <div className="field">
-            <label htmlFor="name">Name of the entity</label>
-            {/* nome da entidade */}
+            <label htmlFor="name">{t("ENTITY_NAME_PAGE_CREATE_POINT")}</label>
             <input
               onChange={handleInputChange}
               type="text"
@@ -179,8 +179,7 @@ const CreatePoint: React.FC = () => {
 
           <div className="field-group">
             <div className="field">
-              <label htmlFor="email">E-mail</label>
-              {/* Email */}
+              <label htmlFor="email">{t("EMAIL_PAGE_CREATE_POINT")}</label>
               <input
                 onChange={handleInputChange}
                 type="email"
@@ -188,24 +187,21 @@ const CreatePoint: React.FC = () => {
                 id="email"
               />
             </div>
-            <div className="field">
-              <label htmlFor="whatsapp">WhatsApp</label>
-              {/* WhatsApp */}
-              <input
-                onChange={handleInputChange}
-                type="text"
-                name="whatsapp"
-                id="whatsapp"
-              />
-            </div>
+          </div>
+          <div className="field">
+            <label htmlFor="whatsapp">{t("WHATSAPP_PAGE_CREATE_POINT")}</label>
+            <input
+              onChange={handleInputChange}
+              type="text"
+              name="whatsapp"
+              id="whatsapp"
+            />
           </div>
         </fieldset>
         <fieldset>
           <legend>
-            <h2>Address</h2>
-            {/* endereço */}
-            <span>Select an address on the map</span>
-            {/* selecione um endereço no mapa */}
+            <h2>{t("ADDRESS_PAGE_CREATE_POINT")}</h2>
+            <span>{t("SELECT_ADDRESS_ON_MAP_PAGE_CREATE_POINT")}</span>
           </legend>
 
           <Map center={initialPosition} zoom={15} onClick={handleClickMap}>
@@ -218,16 +214,14 @@ const CreatePoint: React.FC = () => {
 
           <div className="field-group">
             <div className="field">
-              <label htmlFor="uf">State (UF)</label>
-              {/* Estado */}
+              <label htmlFor="uf">{t("STATE_PAGE_CREATE_POINT")}</label>
               <select
                 name="uf"
                 id="uf"
                 value={selectedUf}
                 onChange={handleSelectUf}
               >
-                <option value="0">Select an UF</option>
-                {/* selecione uma uf */}
+                <option value="0">{t("SELECT_STATE_PAGE_CREATE_POINT")}</option>
                 {ufs.map((uf) => (
                   <option key={uf} value={uf}>
                     {uf}
@@ -236,16 +230,14 @@ const CreatePoint: React.FC = () => {
               </select>
             </div>
             <div className="field">
-              <label htmlFor="city">City</label>
-              {/* Cidade */}
+              <label htmlFor="city">{t("CITY_PAGE_CREATE_POINT")}</label>
               <select
                 name="city"
                 id="city"
                 value={selectedCity}
                 onChange={handleSelectCity}
               >
-                <option value="0">Select a city</option>
-                {/* selecione uma cidade */}
+                <option value="0">{t("SELECT_CITY_PAGE_CREATE_POINT")}</option>
                 {cities.map((city) => (
                   <option key={city.id} value={city.name}>
                     {city.name}
@@ -257,10 +249,8 @@ const CreatePoint: React.FC = () => {
         </fieldset>
         <fieldset>
           <legend>
-            <h2>Collection items</h2>
-            {/* items de coleta */}
-            <span>Select one or more items below</span>
-            {/* selecione um ou mais items abaixo */}
+            <h2>{t("COLLECTION_ITEMS_CITY_PAGE_CREATE_POINT")}</h2>
+            <span>{t("SELECT_COLLECTION_ITEMS_CITY_PAGE_CREATE_POINT")}</span>
           </legend>
 
           <ul className="items-grid">
@@ -277,8 +267,33 @@ const CreatePoint: React.FC = () => {
           </ul>
         </fieldset>
 
-        <button type="submit">Register collection point</button>
-        {/* cadastrar ponto de coleta */}
+        <button
+          className={
+            !formData.email ||
+            !formData.whatsapp ||
+            !formData.name ||
+            !selectedUf ||
+            !selectedCity ||
+            selectedPosition[0] === 0 ||
+            selectedItems.length === 0 ||
+            !selectedFile
+              ? "disabled"
+              : ""
+          }
+          disabled={
+            !formData.email ||
+            !formData.whatsapp ||
+            !formData.name ||
+            !selectedUf ||
+            !selectedCity ||
+            selectedPosition[0] === 0 ||
+            selectedItems.length === 0 ||
+            !selectedFile
+          }
+          type="submit"
+        >
+          {t("BUTTON_REGISTER_POINT_CITY_PAGE_CREATE_POINT")}
+        </button>
       </form>
     </div>
   );

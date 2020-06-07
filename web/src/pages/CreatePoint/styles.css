@@ -201,3 +201,34 @@
   background: #e1faec;
   border: 2px solid #34cb79;
 }
+
+.disabled {
+  background: #6c6c80 !important;
+}
+
+@media (max-width: 600px) {
+  #page-create-point header {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .items-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .items-grid li {
+    min-height: 150px;
+    margin-right: 10px;
+  }
+
+  .items-grid li span {
+    margin-top: 12px;
+    font-size: 0.8rem;
+  }
+
+  .items-grid li img {
+    width: 60px;
+  }
+}

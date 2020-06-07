@@ -6,4 +6,5 @@ database.sqlite
 
 .env
 
-/server/uploads
+/server/uploads/*
+!/server/uploads/.gitkeep
