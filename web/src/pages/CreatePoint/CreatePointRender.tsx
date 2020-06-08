@@ -95,29 +95,27 @@ const CreatePointRender: React.FC<IPropsRender> = ({
             selectedPosition={selectedMapPosition}
           />
 
-          <div className="field-group">
-            <FieldSelect
-              onChangeSelect={handleSelectUf}
-              value={selectedUf}
-              htmlFor="uf"
-              labelName={t("STATE_PAGE_CREATE_POINT")}
-              data={ufs}
-              nameInput="uf"
-              idInput="uf"
-              nameOptionDefault={t("SELECT_STATE_PAGE_CREATE_POINT")}
-            />
+          <FieldSelect
+            onChangeSelect={handleSelectUf}
+            value={selectedUf}
+            htmlFor="uf"
+            labelName={t("STATE_PAGE_CREATE_POINT")}
+            data={ufs}
+            nameInput="uf"
+            idInput="uf"
+            nameOptionDefault={t("SELECT_STATE_PAGE_CREATE_POINT")}
+          />
 
-            <FieldSelect
-              onChangeSelect={handleSelectCity}
-              value={selectedCity}
-              htmlFor="city"
-              labelName={t("CITY_PAGE_CREATE_POINT")}
-              data={cities}
-              nameInput="city"
-              idInput="city"
-              nameOptionDefault={t("SELECT_CITY_PAGE_CREATE_POINT")}
-            />
-          </div>
+          <FieldSelect
+            onChangeSelect={handleSelectCity}
+            value={selectedCity}
+            htmlFor="city"
+            labelName={t("CITY_PAGE_CREATE_POINT")}
+            data={cities}
+            nameInput="city"
+            idInput="city"
+            nameOptionDefault={t("SELECT_CITY_PAGE_CREATE_POINT")}
+          />
         </fieldset>
         <fieldset>
           <legend>
