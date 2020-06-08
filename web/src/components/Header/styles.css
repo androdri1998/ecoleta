@@ -1,0 +1,30 @@
+.header__header {
+  margin: 48px 0 0;
+
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__header a {
+  color: var(--title-color);
+  font-weight: bold;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+}
+
+.header__header a svg {
+  margin-right: 16px;
+  color: var(--primary-color);
+}
+
+@media (max-width: 900px) {
+  .header__header {
+    margin: 48px auto 0;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
