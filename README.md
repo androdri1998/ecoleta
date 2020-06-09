@@ -6,8 +6,13 @@ and also get in touch to Collection point by Whatsapp or Email.
 
 **This is only a study application**
   
-## Tecnologies  
-### Web application  
+# Run application  
+  
+## Web application  
+### Layout  
+![Web](/layout/home_i18n_br_desktop.png)  
+  
+### Technologies  
 * React JS  
 * TypeScript  
 * axios  
@@ -15,37 +20,6 @@ and also get in touch to Collection point by Whatsapp or Email.
 * leaflet  
 * react-router-dom  
 * react-icons  
-
-### Back-end  
-* Node JS  
-* TypeScript  
-* hapi/joi  
-* cors  
-* express  
-* knex  
-* multer  
-* sqlite3  
-* moment  
-* ts-node  
-* ts-node-dev  
-  
-### Mobile application  
-* React Native
-* React JS  
-* TypeScript  
-* expo-google-fonts  
-* react-navigation  
-* axios  
-* expo  
-* expo-mail-composer  
-* i18next  
-* react-native-picker-select  
-  
-# Run application  
-  
-## Web application  
-### Layout  
-![Web](/layout/home_i18n_br_desktop.png)  
   
 ### Steps required  
 Create a file named as `.env` in path `./web/`, there is a example file named as `.env.example`  
@@ -65,6 +39,18 @@ Build a development application
 ### Layout  
 <img src="/layout/home_app.png" width="300x">  
   
+### Technologies  
+* React Native
+* React JS  
+* TypeScript  
+* expo-google-fonts  
+* react-navigation  
+* axios  
+* expo  
+* expo-mail-composer  
+* i18next  
+* react-native-picker-select  
+  
 ### Steps required  
 Create a file named as `.env` in path `./mobile/`, there is a example file named as `.env.example`  
 in path `./mobile/`.
@@ -76,7 +62,20 @@ in path `./mobile/`.
 #### `yarn start`  
 Run a development application listening on `localhost:19000`  
   
-## Back-end
+## Back-end  
+### Technologies 
+* Node JS  
+* TypeScript  
+* hapi/joi  
+* cors  
+* express  
+* knex  
+* multer  
+* sqlite3  
+* moment  
+* ts-node  
+* ts-node-dev  
+  
 ### Steps required  
 Create a file named as `.env` in path `./server/`, there is a example file named as `.env.example`  
 in path `./server/`.
