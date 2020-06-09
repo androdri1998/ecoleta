@@ -1,0 +1,216 @@
+swagger: "2.0"
+info:
+  description: "This is a documentation about the Ecoleta's back-end application"
+  version: "1.0.0"
+  title: "Ecoleta's Back-end"
+host: "localhost:3333"
+basePath: "/"
+tags:
+  - name: "Items"
+    description: "Everything about Items"
+  - name: "Points"
+    description: "Everything about Collection Points"
+schemes:
+  - "http"
+paths:
+  /items:
+    get:
+      tags:
+        - "Items"
+      summary: "List items registereds"
+      description: ""
+      operationId: "listItems"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ListItems"
+        "400":
+          description: "Bad Request Error. Query the 'error_decription' to more details about error"
+          schema:
+            $ref: "#/definitions/Error"
+        "500":
+          description: "Internal Error. Query the 'error_decription' to more details about error"
+          schema:
+            $ref: "#/definitions/Error"
+  /Points:
+    get:
+      tags:
+        - "Points"
+      summary: "List collection points registereds"
+      description: ""
+      operationId: "listCollectionPoints"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "query"
+          name: "city"
+          description: "Filter by City of the collection point"
+          required: false
+          type: string
+        - in: "query"
+          name: "uf"
+          description: "Filter by UF of the collection point"
+          required: false
+          type: string
+        - in: "query"
+          name: "items"
+          description: "Filter by Items of the collection point"
+          required: false
+          type: string
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ListCollectionPoints"
+        "400":
+          description: "Bad Request Error. Query the 'error_decription' to more details about error"
+          schema:
+            $ref: "#/definitions/Error"
+        "500":
+          description: "Internal Error. Query the 'error_decription' to more details about error"
+          schema:
+            $ref: "#/definitions/Error"
+    post:
+      tags:
+        - "Points"
+      summary: "Register Collection Point"
+      description: ""
+      operationId: "newCollectionPoint"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Pet object that needs to be added to the store.(Should be send to api as multipart/form-data)"
+          required: true
+          schema:
+            $ref: "#/definitions/ParamsNewCollectionPoint"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/CollectionPoint"
+        "400":
+          description: "Bad Request Error. Query the 'error_decription' to more details about error"
+          schema:
+            $ref: "#/definitions/Error"
+        "500":
+          description: "Internal Error. Query the 'error_decription' to more details about error"
+          schema:
+            $ref: "#/definitions/Error"
+  /Points/{point_id}:
+    get:
+      tags:
+        - "Points"
+      summary: "List details of the collection point"
+      description: ""
+      operationId: "listCollectionPoint"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "point_id"
+          description: "Id of the collection point"
+          required: true
+          type: string
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/CollectionPoint"
+        "400":
+          description: "Bad Request Error. Query the 'error_decription' to more details about error"
+          schema:
+            $ref: "#/definitions/Error"
+        "500":
+          description: "Internal Error. Query the 'error_decription' to more details about error"
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  ListItems:
+    type: "object"
+    properties:
+      results:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: "string"
+            image_url:
+              type: "string"
+            title:
+              type: "string"
+  Error:
+    type: "object"
+    properties:
+      error:
+        type: "string"
+      error_description:
+        type: "string"
+  ParamsNewCollectionPoint:
+    type: "object"
+    properties:
+      image:
+        type: object
+      name:
+        type: string
+      email:
+        type: string
+      whatsapp:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      city:
+        type: string
+      uf:
+        type: string
+  ListCollectionPoints:
+    type: "object"
+    properties:
+      results:
+        type: array
+        items:
+          $ref: "#/definitions/CollectionPoint"
+  CollectionPoint:
+    type: "object"
+    properties:
+      id:
+        type: string
+      image:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
+      whatsapp:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      city:
+        type: string
+      uf:
+        type: string
+      deleted:
+        type: boolean
+      created_at:
+        type: string
+      updated_at:
+        type: string
