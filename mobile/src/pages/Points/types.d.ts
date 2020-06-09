@@ -27,3 +27,13 @@ export interface ILoadPoints {
   uf: string;
   items: number[];
 }
+
+export interface IPropsIndex {}
+
+export interface IPropsRender {
+  handlerNavigationBack: (event: GestureResponderEvent) => void;
+  city: string;
+  uf: string;
+  selectedItems: number[];
+  handlerSelectItems: Function;
+}

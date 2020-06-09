@@ -21,3 +21,23 @@ export interface IData {
     title: string;
   }[];
 }
+
+export interface IPropsIndex {}
+
+export interface IPropsRender {
+  handlerNavigationBack: (event: GestureResponderEvent) => void;
+  data: {
+    point: {
+      image_url: string;
+      name: string;
+      city: string;
+      uf: string;
+      whatsapp: string;
+    };
+    items: {
+      title: string;
+    }[];
+  };
+  handleWhatsapp: (pointerInside: boolean) => void;
+  handleComposerMail: (pointerInside: boolean) => void;
+}

@@ -18,3 +18,22 @@ export interface ICityResponse {
   id: number;
   nome: string;
 }
+
+export interface IPropsIndex {}
+
+export interface IPropsRender {
+  ufs: {
+    key: string;
+    label: string;
+    value: string;
+  }[];
+  handleSelectUf: Function;
+  cities: {
+    key: string;
+    label: string;
+    value: string;
+  }[];
+  handleSelectCity: Function;
+  disabled: boolean;
+  onPressEnter: (pointerInside: boolean) => void;
+}
